@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Список студентов</title>
+    <link rel="shortcut icon" href="https://favicon.vspravke.com/ico/1/faviconka.ru_1_107760.ico" type="image/x-icon">
+    <link rel="stylesheet" href="css/normalize.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div id="app" class="container">
+    <h1 class="title">Панель управления студентами</h1>
+    <form id="form" class="form">
+      <label class="form__label" for="input-name">
+        <span class="form__span">Введите имя</span>
+        <input id="input-name" type="text" class="form__input">
+      </label>
+      <label class="form__label" for="input-surname">
+        <span class="form__span">Введите фамилию</span>
+        <input id="input-surname" type="text" class="form__input">
+      </label>
+      <label class="form__label" for="input-middle-name">
+        <span class="form__span">Введите отчество</span>
+        <input id="input-last-name" type="text" class="form__input">
+      </label>
+      <label class="form__label" for="input-birdt">
+        <span class="form__span">Введите дату рождения</span>
+        <input min="1900-01-01" max="2023-12-31" id="input-birth" type="date" class="form__input">
+      </label>
+      <label class="form__label" for="input-start">
+        <span class="form__span">Введите год начала обучения</span>
+        <input id="input-start" type="number" class="form__input">
+      </label>
+      <label class="form__label" for="input-faculty">
+        <span class="form__span">Введите факультет</span>
+        <input id="input-faculty" type="text" class="form__input">
+      </label>
+      <span class="form__span-error" id="error-span"></span>
+      <button class="form__btn">Добавить студента</button>
+    </form>
+    <form class="form-filter" id="form-filter">
+      <h2 class="form-filter__title">Фильтры</h2>
+      <input class="form-filter__input" id="inp-fio" type="text" placeholder="ФИО">
+      <input class="form-filter__input" id="inp-faculty" type="text" placeholder="Факультет">
+      <input class="form-filter__input" id="inp-start" type="number" placeholder="Год начала обучения">
+      <input class="form-filter__input" id="inp-final" type="number" placeholder="Год конца обучения">
+      <button type="submit" class="form__btn form__btn--filter" id="filter-btn">Отфильтровать</button>
+    </form>
+  </div>
+  <script src="main.js" defer type="module"></script>
+</body>
+</html>
