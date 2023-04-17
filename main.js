@@ -1,39 +1,49 @@
-//Функция добавления студента на сервер
-async function addStudentServer(obj) {
-  let response = await fetch(`http://localhost:3000/api/students`, {
-    method: "POST",
-    headers: { 'Content-Type': 'application/json'},
-    body: JSON.stringify(obj)
-  })
-  let date = await response.json()
-  return date
-}
+// Этап 1. В HTML файле создайте верстку элементов, которые будут статичны(неизменны).
 
-//Функция получения списка студентов
-async function getStudentsServer() {
-  let response = await fetch(`http://localhost:3000/api/students`, {
-    method: "GET",
-    headers: { 'Content-Type': 'application/json'}
-  })
-  let date = await response.json()
-  return date
-}
+// Этап 2. Создайте массив объектов студентов.Добавьте в него объекты студентов, например 5 студентов.
 
-//Функция удаления студента с сервера
-async function deleteStudentServer(id) {
-  let response = await fetch(`http://localhost:3000/api/students/` + id, {
-    method: 'DELETE',
-    headers: { 'Content-Type': 'application/json'}
-  })
-  let date = await response.json()
-  return date
-}
-
-let studentsList = []
-let getServerData = await getStudentsServer()
-if (getServerData) {
-  studentsList = getServerData
-}
+const studentsList = [
+  {
+    name: 'Павел',
+    surname: 'Быстров',
+    middleName: 'Андреевич',
+    birthYear: `${getDateBirth(new Date(1990, 07, 11))} (${agetost(calculateAge(new Date(1990, 07, 11)))})`,
+    startOfTraining: getYearStart(2021),
+    faculty: 'Гриффиндор'
+  },
+  {
+    name: 'Петр',
+    surname: 'Идряков',
+    middleName: 'Михайлович',
+    birthYear: `${getDateBirth(new Date('1991-05-05'))} (${agetost(calculateAge(new Date('1991-05-05')))})`,
+    startOfTraining: getYearStart(2011),
+    faculty: 'Когтевран'
+  },
+  {
+    name: 'Татьяна',
+    surname: 'Михайлова',
+    middleName: 'Олеговна',
+    birthYear: `${getDateBirth(new Date('1989-10-02'))} (${agetost(calculateAge(new Date('1989-10-02')))})`,
+    startOfTraining: getYearStart(2001),
+    faculty: 'Слизерин'
+  },
+  {
+    name: 'Николай',
+    surname: 'Варфлусьев',
+    middleName: 'Генадьевич',
+    birthYear: `${getDateBirth(new Date(1979, 02, 01))} (${agetost(calculateAge(new Date(1979, 02, 01)))})`,
+    startOfTraining: getYearStart(2000),
+    faculty: 'Слизерин'
+  },
+  {
+    name: 'Антон',
+    surname: 'Коршунов',
+    middleName: 'Андреевич',
+    birthYear: `${getDateBirth(new Date('1999-07-12'))} (${agetost(calculateAge(new Date('1999-07-12')))})`,
+    startOfTraining: getYearStart(2019),
+    faculty: 'Пуффендуй'
+  }
+]
 
 //Функция преобразования даты рождения в привычный вид
 function getDateBirth(date) {
@@ -81,33 +91,33 @@ function getYearStart(date) {
   }
 }
 
-//функцию вывода одного студента в таблицу.
+// Этап 3. Создайте функцию вывода одного студента в таблицу, по аналогии с тем, как вы делали вывод одного дела в модуле 8. Функция должна вернуть html элемент с информацией o пользователе. У функции должен быть один аргумент - объект студента.
 
 const $table = document.createElement('table'),
       $thead = document.createElement('thead'),
       $trHeadRow = document.createElement('tr'),
       $thHeadFIO = document.createElement('th'),
-      $thHeadBirthDay = document.createElement('th'),
-      $thHeadStudyStart = document.createElement('th'),
+      $thHeadBirthYear = document.createElement('th'),
+      $thHeadStartOfTraining = document.createElement('th'),
       $thHeadFaculity = document.createElement('th'),
       $tbody = document.createElement('tbody'),
       $container = document.getElementById('app');
 $thHeadFIO.textContent = 'Ф. И. О'
-$thHeadBirthDay.textContent = 'Дата рождения и возраст'
-$thHeadStudyStart.textContent = 'Годы обучения'
+$thHeadBirthYear.textContent = 'Дата рождения и возраст'
+$thHeadStartOfTraining.textContent = 'Годы обучения'
 $thHeadFaculity.textContent = 'Факультет'
 
 $thHeadFIO.classList.add('click')
 $thHeadFaculity.classList.add('click')
-$thHeadBirthDay.classList.add('click')
-$thHeadStudyStart.classList.add('click')
+$thHeadBirthYear.classList.add('click')
+$thHeadStartOfTraining.classList.add('click')
 $table.classList.add('table')
 $table.classList.add('table-striped')
 
 $trHeadRow.append($thHeadFIO)
 $trHeadRow.append($thHeadFaculity)
-$trHeadRow.append($thHeadBirthDay)
-$trHeadRow.append($thHeadStudyStart)
+$trHeadRow.append($thHeadBirthYear)
+$trHeadRow.append($thHeadStartOfTraining)
 $thead.append($trHeadRow)
 $table.append($thead)
 $table.append($tbody)
@@ -116,45 +126,36 @@ $container.append($table)
 function getStudentItem(studentObj) {
   const $trBodyRow = document.createElement('tr'),
         $thBodyFIO = document.createElement('td'),
-        $thBodyBirthDay = document.createElement('td'),
-        $thBodyStudyStart = document.createElement('td'),
-        $thBodyFaculity = document.createElement('td'),
-        $thBodyDelete = document.createElement('td'),
-        $buttonDeleteStudent = document.createElement('button');
-  $buttonDeleteStudent.classList.add('btn', 'btn-danger', 'w-100')
-  studentObj.fio = studentObj.surname + ' ' + studentObj.name + ' ' + studentObj.lastname
+        $thBodyBirthYear = document.createElement('td'),
+        $thBodyStartOfTraining = document.createElement('td'),
+        $thBodyFaculity = document.createElement('td');
+  studentObj.fio = studentObj.surname + ' ' + studentObj.name + ' ' + studentObj.middleName
   $thBodyFIO.textContent = studentObj.fio
-  $thBodyBirthDay.textContent = studentObj.birthday
-  $thBodyStudyStart.textContent = studentObj.studyStart
+  $thBodyBirthYear.textContent = studentObj.birthYear
+  $thBodyStartOfTraining.textContent = studentObj.startOfTraining
   $thBodyFaculity.textContent = studentObj.faculty
-  $buttonDeleteStudent.textContent = 'Удалить'
-  $buttonDeleteStudent.addEventListener('click', async function() {
-    await deleteStudentServer(studentObj.id)
-    $trBodyRow.remove()
-  })
 
-  $thBodyDelete.append($buttonDeleteStudent)
   $trBodyRow.append($thBodyFIO)
   $trBodyRow.append($thBodyFaculity)
-  $trBodyRow.append($thBodyBirthDay)
-  $trBodyRow.append($thBodyStudyStart)
-  $trBodyRow.append($thBodyDelete)
+  $trBodyRow.append($thBodyBirthYear)
+  $trBodyRow.append($thBodyStartOfTraining)
   $tbody.append($trBodyRow)
 }
-//функция отрисовки всех студентов в таблицу
 
+// Этап 4. Создайте функцию отрисовки всех студентов. Аргументом функции будет массив студентов. Функция должна использовать ранее созданную функцию создания одной записи для студента. Цикл поможет вам создать список студентов. Каждый раз при изменении списка студента вы будете вызывать эту функцию для отрисовки таблицы.
+//Вывод в таблицу всех студентов из массива
 function renderStudentsTable(studentsArray) {
   $tbody.textContent = ''
-  const $filterFIO = document.getElementById('inp-fio').value
-  const $filterFaculty = document.getElementById('inp-faculty').value
-  const $filterStart = document.getElementById('inp-start').value
-  const $filterFinal = document.getElementById('inp-final').value
+  const $filterFIO = document.getElementById('inp-fio').value,
+        $filterFaculty = document.getElementById('inp-faculty').value,
+        $filterStart = document.getElementById('inp-start').value,
+        $filterFinal = document.getElementById('inp-final').value
   let newArr = [...studentsArray]
   if ($filterFIO !== '') newArr = filter(studentsList, 'fio', $filterFIO)
   if ($filterFaculty !== '') newArr = filter(studentsList, 'faculty', $filterFaculty)
   for (let i = 0; i < studentsArray.length; i++) {
-    if ($filterStart == studentsArray[i].studyStart.substring(0, 4)) newArr = filter(studentsList, 'studyStart', $filterStart)
-    if ($filterFinal == studentsArray[i].studyStart.substring(7, 11)) newArr = filter(studentsList, 'studyStart', $filterFinal)
+    if ($filterStart == studentsArray[i].startOfTraining.substring(0, 4)) newArr = filter(studentsList, 'startOfTraining', $filterStart)
+    if ($filterFinal == studentsArray[i].startOfTraining.substring(7, 11)) newArr = filter(studentsList, 'startOfTraining', $filterFinal)
   }
   for (const item of newArr) {
     getStudentItem(item)
@@ -164,19 +165,19 @@ renderStudentsTable(studentsList)
 
 // Этап 5. К форме добавления студента добавьте слушатель события отправки формы, в котором будет проверка введенных данных. Если проверка пройдет успешно, добавляйте объект с данными студентов в массив студентов и запустите функцию отрисовки таблицы студентов, созданную на этапе 4.
 
-document.getElementById('form').addEventListener('submit', async function(e) {
+document.getElementById('form').addEventListener('submit', e => {
   e.preventDefault();
   const $inputName = document.getElementById('input-name'),
         $inputSurname = document.getElementById('input-surname'),
-        $inputLastName = document.getElementById('input-last-name')
-  const $inputBirthDay = document.getElementById('input-birth')
-  const $inputStudyStart = document.getElementById('input-start')
-  const $inputFaculty = document.getElementById('input-faculty')
+        $inputMiddleName = document.getElementById('input-middle-name')
+        $inputBirthYear = document.getElementById('input-birdt'),
+        $inputStartOfTraining = document.getElementById('input-start'),
+        $inputFaculty = document.getElementById('input-faculty')
   const student = {}
   student.name = $inputName.value
   student.surname = $inputSurname.value
-  student.lastname = $inputLastName.value
-  student.studyStart = $inputStudyStart.value
+  student.middleName = $inputMiddleName.value
+  student.startOfTraining = $inputStartOfTraining.value
   student.faculty = $inputFaculty.value
 
   const errorMessage = document.getElementById('error-span')
@@ -189,44 +190,44 @@ document.getElementById('form').addEventListener('submit', async function(e) {
     errorMessage.textContent = "Вы не ввели фамилию*"
     return
   }
-  if($inputLastName.value.trim() === '') {
+  if($inputMiddleName.value.trim() === '') {
     errorMessage.textContent = "Вы не ввели отчество*"
     return
   }
-  if(!$inputBirthDay.valueAsDate) {
+  if(!$inputBirthYear.valueAsDate) {
     errorMessage.textContent = 'Вы не указали дату рождения*'
     return
   }else {
-    student.birthday = `${getDateBirth($inputBirthDay.valueAsDate)} (${agetost(calculateAge($inputBirthDay.valueAsDate))})`
+    student.birthYear = `${getDateBirth($inputBirthYear.valueAsDate)} (${agetost(calculateAge($inputBirthYear.valueAsDate))})`
   }
-  if($inputStudyStart.value === '') {
+  if($inputStartOfTraining.value === '') {
     errorMessage.textContent = "Вы не ввели год начала обучения*"
     return
-  }else if ($inputStudyStart.value < 2000) {
+  }else if ($inputStartOfTraining.value < 2000) {
     errorMessage.textContent = 'Год начала обучения не может быть раньше 2000-го*'
     return
-  }else if ($inputStudyStart.value > 2023) {
+  }else if ($inputStartOfTraining.value > 2023) {
     errorMessage.textContent = 'Год начала обучения не может быть позже текущего*'
     return
   }else {
-    student.studyStart = getYearStart($inputStudyStart.value)
+    student.startOfTraining = getYearStart($inputStartOfTraining.value)
   }
 
   if($inputFaculty.value.trim() === '') {
     errorMessage.textContent = "Вы не ввели факультет*"
     return
   }
+  studentsList.push(student)
 
-  let serverData = await addStudentServer(student);
-  studentsList.push(serverData)
   renderStudentsTable(studentsList)
   $inputName.value = ''
   $inputSurname.value = ''
-  $inputLastName.value = ''
-  $inputBirthDay.value = ''
-  $inputStudyStart.value = ''
+  $inputMiddleName.value = ''
+  $inputBirthYear.value = ''
+  $inputStartOfTraining.value = ''
   $inputFaculty.value = ''
 })
+
 // Этап 6. Создайте функцию сортировки массива студентов и добавьте события кликов на соответствующие колонки.
 let sortFlag,
     sortDir = true
@@ -241,8 +242,8 @@ function sortArray(arr) {
 //Функция для сортировки даты
 function sortDate(arr) {
   arr.sort(function(a, b) {
-    let sort = new Date(a['birthday'].substring(0, 10)) < new Date(b['birthday'].substring(0, 10))
-    if (sortDir == false) sort = new Date(a['birthday'].substring(0, 10)) > new Date(b['birthday'].substring(0, 10))
+    let sort = new Date(a['birthYear'].substring(0, 10)) < new Date(b['birthYear'].substring(0, 10))
+    if (sortDir == false) sort = new Date(a['birthYear'].substring(0, 10)) > new Date(b['birthYear'].substring(0, 10))
     if (sort) return -1
   })
   renderStudentsTable(arr)
@@ -258,12 +259,12 @@ $thHeadFaculity.addEventListener('click', () => {
   sortDir = !sortDir
   sortArray(studentsList)
 });
-$thHeadBirthDay.addEventListener('click', () => {
+$thHeadBirthYear.addEventListener('click', () => {
   sortDir = !sortDir
   sortDate(studentsList)
 })
-$thHeadStudyStart.addEventListener('click', () => {
-  sortFlag = 'studyStart'
+$thHeadStartOfTraining.addEventListener('click', () => {
+  sortFlag = 'startOfTraining'
   sortDir = !sortDir
   sortArray(studentsList)
 });
@@ -280,7 +281,7 @@ function filter(arr, prop, value) {
 
 document.getElementById('form-filter').addEventListener('submit', (e) => {
   e.preventDefault()
-  renderStudentsTable(studentsList)
+  console.log(renderStudentsTable(studentsList))
 })
 
 

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
+    <script src="main.js" defer></script>
 </head>
 <body>
   <div id="app" class="container">
@@ -24,11 +25,11 @@
       </label>
       <label class="form__label" for="input-middle-name">
         <span class="form__span">Введите отчество</span>
-        <input id="input-last-name" type="text" class="form__input">
+        <input id="input-middle-name" type="text" class="form__input">
       </label>
       <label class="form__label" for="input-birdt">
         <span class="form__span">Введите дату рождения</span>
-        <input min="1900-01-01" max="2023-12-31" id="input-birth" type="date" class="form__input">
+        <input min="1900-01-01" max="2023-12-31" id="input-birdt" type="date" class="form__input">
       </label>
       <label class="form__label" for="input-start">
         <span class="form__span">Введите год начала обучения</span>
@@ -50,6 +51,5 @@
       <button type="submit" class="form__btn form__btn--filter" id="filter-btn">Отфильтровать</button>
     </form>
   </div>
-  <script src="main.js" defer type="module"></script>
 </body>
 </html>
